@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Codecool Java Web Curriculum</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css" data-is-theme title="vue">
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/dark.css" data-is-theme title="dark" >
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/buble.css" data-is-theme title="buble" >
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/pure.css" data-is-theme title="pure" >
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.css">
+  <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
+  <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+   <nav class="app-nav no-badge">
+     <ul>
+       <li>
+         Change theme
+         <div class="demo-theme-preview">
+           <ul>
+           <li>
+             <a data-theme="vue">Vue</a>
+           </li>
+           <li>
+             <a data-theme="buble">Buble</a>
+           </li>
+           <li>
+             <a data-theme="dark">Dark</a>
+           </li>
+           <li>
+             <a data-theme="pure">Pure</a>
+           </li>
+         </ul>
+         </div>
+       </li>
+     </ul>
+   </nav>
+
+  <div id="app">Please wait...</div>
+  <style>
+     .demo-theme-preview {
+       text-align: right;
+     }
+
+     .demo-theme-preview a {
+       padding-right: 10px;
+     }
+
+     .demo-theme-preview a:hover {
+       cursor: pointer;
+       text-decoration: underline;
+     }
+   </style>
+
+  <script>
+    mermaid.initialize({ startOnLoad: false });
+    window.$docsify = {
+      name: '',
+      repo: '',
+      loadSidebar: "sidebar.md",
+      maxLevel: 6,
+      subMaxLevel: 4,
+      alias: {
+        '/.*/sidebar.md': 'sidebar.md'
+      },
+      markdown: {
+        renderer: {
+          code: function(code, lang) {
+            if (lang === "mermaid") {
+              return (
+                '<div class="mermaid">' + mermaid.render(lang, code) + "</div>"
+              );
+            }
+            return this.origin.code.apply(this, arguments);
+          }
+        }
+      }
+    }
+  </script>
+  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-java.min.js"></script>
+  <!-- <script src="//raw.github.com/ScottHamper/Cookies/1.2.3/dist/cookies.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+  <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+
+
+  <script>
+    var preview = Docsify.dom.find('.demo-theme-preview');
+    var themes = Docsify.dom.findAll('[data-is-theme]');
+    var defaultThemeTitle = 'vue';
+    var currentThemeTitle = Cookies.get('theme') || defaultThemeTitle;
+
+    window.setTheme = function (themeTitle) {
+      themes.forEach(function (theme) {
+        theme.disabled = theme.title !== themeTitle
+      });
+    };
+
+    window.setTheme('');
+    window.setTheme(currentThemeTitle);
+
+    preview.onclick = function (e) {
+      var title = e.target.getAttribute('data-theme')
+      if (title) {
+        window.setTheme(title);
+        Cookies.set('theme', title);
+      }
+    };
+  </script>
+</body>
+</html>
